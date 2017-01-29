@@ -1,14 +1,26 @@
-const express = require('express');
-const app = express();
-const cors = require('cors');
-require('dotenv').config();
+const express = require('express')
+const mongoose = require('mongoose')
+const cors = require('cors')
 
-app.use(cors());
+require('dotenv').config()
+mongoose.connect(process.env.MONGODB_URI)
 
-app.use(require('./routes'));
+const app = express()
+const db = mongoose.connection
 
-app.use(require('./errors'));
+db.on('error', (err) => console.log(err.message))
 
-app.listen(7000);
+app.use(cors())
 
-console.log('Listening on http://localhost:7000');
+app.use('/viveros', require('./viveros'))
+
+app.use('/migra', require('./migra'))
+
+app.use(function (err, req, res, next) {
+  console.log(err)
+  if (err.name === 'UnauthorizedError') return res.status(401).send()
+})
+
+app.listen(7000)
+
+console.log('Listening on http://localhost:7000')
