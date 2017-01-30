@@ -3,7 +3,13 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const viveroSchema = new Schema({
-    location: String,
+  type: 'Feature',
+  geometry: {
+    type: 'Point',
+    coordinates: [Number, Number]
+  },
+  properties: {
+    id: String
     stock: [{
       especie: String,
       semillas: Number,
@@ -13,6 +19,7 @@ const viveroSchema = new Schema({
       maduro: Number,
       grande: Number
     }],
+  }
 });
 
 module.exports = mongoose.model('Vivero', viveroSchema);
