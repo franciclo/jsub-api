@@ -3,9 +3,9 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const viveroMapSchema = new Schema({
-  type: 'Feature',
+  type: String,
   geometry: {
-    type: 'Point',
+    type: String,
     coordinates: [Number, Number]
   },
   properties: {

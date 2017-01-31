@@ -3,13 +3,13 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const viveroSchema = new Schema({
-  type: 'Feature',
+  type: String,
   geometry: {
-    type: 'Point',
+    type: String,
     coordinates: [Number, Number]
   },
   properties: {
-    id: String
+    id: String,
     stock: [{
       especie: String,
       semillas: Number,

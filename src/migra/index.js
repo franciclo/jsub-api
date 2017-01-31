@@ -1,5 +1,8 @@
 const express = require('express')
 const User = require('./model')
+const UserAuth0 = require('./user-auth0-model')
+const Vivero = require('../viveros/model')
+const ViveroMap = require('../viveros/vivero-map-model')
 
 const router = express.Router()
 
@@ -50,7 +53,7 @@ router.get('/viveros', function(req, res) {
         type: 'Feature',
         geometry: {
           type: 'Point',
-          coordinates: [+location.lat.toFixed(4), +location.lng.toFixed(4)]
+          coordinates: [+location.lng.toFixed(4), +location.lat.toFixed(4)]
         },
         properties: {
           id: user.id,
@@ -79,20 +82,26 @@ router.get('/viveros', function(req, res) {
 router.get('/viveros/map', function(req, res) {
   User.find({emailVerified: true, arboles: { $ne: [] }}, function(err, users) {
     if(err) return res.json({err: err.message})
-    let usersViverosMap = users.map(user => {
-      const location = JSON.parse(user.location)
-      return {
-        type: 'Feature',
-        geometry: {
-          type: 'Point',
-          coordinates: [+location.lat.toFixed(4), +location.lng.toFixed(4)]
-        },
-        properties: {
-          id: user.id
+    let usersViverosMap = {
+      type: "FeatureCollection",
+      features: users.map(user => {
+        const location = JSON.parse(user.location)
+        return {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [+location.lng.toFixed(4), +location.lat.toFixed(4)]
+          },
+          properties: {
+            id: user.id
+          }
         }
-      }
-    })
-    res.json(usersViverosMap)
+      })
+    }
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader("Content-Disposition", "attachment; filename=viveros.geojson");
+    res.end(JSON.stringify(usersViverosMap))
+    // res.json(usersViverosMap)
   })
 })
 
