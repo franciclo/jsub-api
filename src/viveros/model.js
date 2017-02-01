@@ -3,22 +3,20 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const viveroSchema = new Schema({
-  type: String,
   geometry: {
-    type: String,
-    coordinates: [Number, Number]
+    coordinates: [Number]
   },
   properties: {
-    id: String,
+    user: String,
     stock: [{
-      especie: String,
-      semillas: Number,
-      brotes: Number,
-      plantines: Number,
-      medianos: Number,
-      maduro: Number,
-      grande: Number
-    }],
+      // especie: String,
+      // semillas: Number,
+      // brotes: Number,
+      // plantines: Number,
+      // medianos: Number,
+      // maduro: Number,
+      // grande: Number
+    }]
   }
 });
 

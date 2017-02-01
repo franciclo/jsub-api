@@ -4,6 +4,7 @@ const cors = require('cors')
 
 require('dotenv').config()
 mongoose.connect(process.env.MONGODB_URI)
+mongoose.Promise = Promise
 
 const app = express()
 const db = mongoose.connection
