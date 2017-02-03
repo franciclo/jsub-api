@@ -96,20 +96,27 @@ router.get('/viveros', function(req, res) {
 })
 
 router.get('/viveros/map', function(req, res) {
-  Vivero.find({emailVerified: true, arboles: { $ne: [] }}, function(err, viveros) {
+  Vivero.find({}, function(err, viveros) {
     if(err) return res.json({err: err.message})
+    console.log('fetching ', viveros.length, ' viveros')
     let viverosMap = {
       type: 'FeatureCollection',
-      features: viveros.map(vivero => {
-        vivero.type = 'Feature'
-        vivero.geometry.type = 'Point'
-        delete vivero.properties.stock
-        return vivero
-      })
+      features: viveros.map(vivero => ({
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: vivero.geometry.coordinates
+          },
+          properties: {
+            user: vivero.properties.user
+          }
+        })
+      )
     }
     res.setHeader('Content-Type', 'application/json')
     res.setHeader('Content-Disposition', 'attachment; filename=viveros.geojson')
     res.end(JSON.stringify(viverosMap))
+    // res.json(viverosMap)
   })
 })
 
