@@ -60,7 +60,7 @@ router.get('/viveros', function(req, res) {
         const location = JSON.parse(user.location)
         return {
           geometry: {
-            coordinates: [+location.lng.toFixed(4), +location.lat.toFixed(4)]
+            coordinates: [+location.lng, +location.lat]
           },
           properties: {
             user: user.id,

@@ -11,10 +11,8 @@ const router = express.Router()
 router.get('/stock/:ids', function(req, res) {
   const ids = req.params.ids.split(',')
 
-  Vivero.find({'properties.user': {$in: ids}}, function (err, viveros) {
+  Vivero.find({_id: {$in: ids}}, function (err, viveros) {
     if(err) return res.sendStatus(500)
-    if(!viveros) return res.sendStatus(404)
-    console.log('find ', viveros.length, ' viveros')
     const viverosStock = viveros.map(vivero => ({
         type: 'Feature',
         geometry: {
@@ -22,7 +20,7 @@ router.get('/stock/:ids', function(req, res) {
           coordinates: vivero.geometry.coordinates
         },
         properties: {
-          id: vivero.properties.user,
+          id: vivero.id,
           stock: vivero.properties.stock
         }
       })
