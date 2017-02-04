@@ -98,7 +98,6 @@ router.get('/viveros', function(req, res) {
 router.get('/viveros/map', function(req, res) {
   Vivero.find({}, function(err, viveros) {
     if(err) return res.json({err: err.message})
-    console.log('fetching ', viveros.length, ' viveros')
     let viverosMap = {
       type: 'FeatureCollection',
       features: viveros.map(vivero => ({
@@ -108,7 +107,7 @@ router.get('/viveros/map', function(req, res) {
             coordinates: vivero.geometry.coordinates
           },
           properties: {
-            user: vivero.properties.user
+            id: vivero.id
           }
         })
       )
