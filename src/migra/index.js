@@ -70,13 +70,21 @@ router.get('/viveros', function(req, res) {
                 .indexOf(arbol.especie)
 
               if(~arbolI) {
-                stock[arbolI][tamagno(arbol.tamagno)] = arbol.cantidad
+                stock[arbolI].cantidades.push({
+                  tipo: tamagno(arbol.tamagno),
+                  cantidad: arbol.cantidad
+                })
               } else {
                 let newArbol = {
-                  especie: arbol.especie
+                  especie: arbol.especie,
+                  cantidades: []
                 }
 
-                newArbol[tamagno(arbol.tamagno)] = arbol.cantidad
+                newArbol.cantidades.push({
+                  tipo: tamagno(arbol.tamagno),
+                  cantidad: arbol.cantidad
+                })
+
                 stock.push(newArbol)
               }
 
@@ -85,12 +93,13 @@ router.get('/viveros', function(req, res) {
           }
         }
       })
+
       usersViveros.forEach(vivero => {
         const newVivero = new Vivero(vivero)
         newVivero.save(err => { if(err) throw new Error(err) })
       })
-      res.sendStatus(200)
-      // res.json(usersViveros)
+
+      res.json(usersViveros)
     })
   })
 })
