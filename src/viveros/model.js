@@ -10,12 +10,10 @@ const viveroSchema = new Schema({
     user: String,
     stock: [{
       // especie: String,
-      // cantidades : [
-      //   {
+      // cantidades : [{
       //     tipo: String,
       //     cantidad: Number
-      //   }
-      // ]
+      // }]
     }]
   }
 });

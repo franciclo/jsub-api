@@ -1,6 +1,6 @@
 const express = require('express')
 // const jwt = require('express-jwt')
-const Vivero = require('./model')
+const Vivero = require('../viveros/model')
 
 const router = express.Router()
 // const authCheck = jwt({

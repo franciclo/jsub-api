@@ -2,7 +2,8 @@ const express = require('express')
 const User = require('./model')
 const UserAuth0 = require('./user-auth0-model')
 const Vivero = require('../viveros/model')
-
+const Especie = require('../especies/model')
+const especiesData = require('./especies-data')
 const router = express.Router()
 
 router.get('/usuarios', function(req, res) {
@@ -128,4 +129,19 @@ router.get('/viveros/map', function(req, res) {
   })
 })
 
+router.get('/especies', function(req, res) {
+  Especie.remove({}, function(err) {
+    if(err) res.sendStatus(500)
+    especiesData.forEach(function(esp) {
+      const newEspecie = new Especie({
+        especieId: esp.id,
+        label: esp.label,
+        latin: esp.latin,
+        tipo: esp.tipo
+      })
+      newEspecie.save(err => { if(err) res.json(err) })
+    })
+  })
+  res.sendStatus(200)
+})
 module.exports = router
