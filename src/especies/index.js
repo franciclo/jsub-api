@@ -1,6 +1,6 @@
 const express = require('express')
 // const jwt = require('express-jwt')
-const Vivero = require('../viveros/model')
+const Especie = require('./model')
 
 const router = express.Router()
 // const authCheck = jwt({
@@ -8,25 +8,11 @@ const router = express.Router()
 //   audience: process.env.AUTH0_CLIENT
 // });
 
-router.get('/stock/:ids', function(req, res) {
+router.get('/:ids', function(req, res) {
   const ids = req.params.ids.split(',')
-
-  Vivero.find({_id: {$in: ids}}, function (err, viveros) {
+  Especie.find({especieId: {$in: ids}}, function (err, especies) {
     if(err) return res.sendStatus(500)
-    const viverosStock = viveros.map(vivero => ({
-        type: 'Feature',
-        geometry: {
-          type: 'Point',
-          coordinates: vivero.geometry.coordinates
-        },
-        properties: {
-          id: vivero.id,
-          stock: vivero.properties.stock
-        }
-      })
-    )
-
-    res.json(viverosStock)
+    res.json(especies)
   })
 })
 //

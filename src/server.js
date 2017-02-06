@@ -15,6 +15,8 @@ app.use(cors())
 
 app.use('/viveros', require('./viveros'))
 
+app.use('/especies', require('./especies'))
+
 app.use('/migra', require('./migra'))
 
 app.use(function (err, req, res, next) {
