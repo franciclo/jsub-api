@@ -1,38 +1,7 @@
 const express = require('express')
 const User = require('./model')
-const UserAuth0 = require('./user-auth0-model')
 const Vivero = require('../viveros/model')
-const Especie = require('../especies/model')
-const especiesData = require('./especies-data')
 const router = express.Router()
-
-router.get('/usuarios', function(req, res) {
-  User.find({}, function(err, users) {
-    if(err) return res.json({err: err.message})
-    res.json(users)
-  })
-})
-
-router.get('/usuarios/auth0', function(req, res) {
-  User.find({emailVerified: true, name: { $exists: true, $ne: '' }}, function(err, users) {
-    if(err) return res.json({err: err.message})
-    UserAuth0.remove({}, function(err) {
-      if(err) return res.json({err: err.message})
-      let usersAuth0 = users.map(user => {
-        return {
-          email_verified: true,
-          email: user.email,
-          username: user.name
-        }
-      })
-      usersAuth0.forEach(user => {
-        const newUser = new UserAuth0(user)
-        newUser.save(err => { if(err) throw new Error(err) })
-      })
-      res.sendStatus(200)
-    })
-  })
-})
 
 router.get('/viveros', function(req, res) {
   function tamagno (n) {
@@ -129,19 +98,4 @@ router.get('/viveros/map', function(req, res) {
   })
 })
 
-router.get('/especies', function(req, res) {
-  Especie.remove({}, function(err) {
-    if(err) res.sendStatus(500)
-    especiesData.forEach(function(esp) {
-      const newEspecie = new Especie({
-        especieId: esp.id,
-        label: esp.label,
-        latin: esp.latin,
-        tipo: esp.tipo
-      })
-      newEspecie.save(err => { if(err) res.json(err) })
-    })
-  })
-  res.sendStatus(200)
-})
 module.exports = router
