@@ -9,7 +9,7 @@ const productorSchema = new Schema({
   coordinates: [Number],
   precios: [{ type : ObjectId, ref: 'Precio' }]
   stock: [{ type : ObjectId, ref: 'Stock' }]
-});
+}, { collection: 'productores' });
 
 productorSchema.index({ name: 'text' });
 

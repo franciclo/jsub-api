@@ -3,6 +3,7 @@ const express = require('express')
 const Productor = require('./model')
 
 const router = express.Router()
+
 // const authCheck = jwt({
 //   secret: new Buffer(process.env.AUTH0_SECRET, 'base64'),
 //   audience: process.env.AUTH0_CLIENT
@@ -12,7 +13,7 @@ router.get('/:ids', function(req, res) {
   const ids = req.params.ids.split(',')
 
   Productor.find({_id: {$in: ids}})
-    .populate('stock')
+    .populate('stock precios')
     .then(function (productores) {
       if(err) return res.sendStatus(500)
       const productoresStock = productores.map(productor => ({
