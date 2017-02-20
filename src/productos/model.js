@@ -4,7 +4,8 @@ var productoSchema = mongoose.Schema(
   {
     name: String,
     latin: String,
-    tipo: String
+    tipo: String,
+    madurez: Number
   }
 )
 

@@ -15,7 +15,7 @@ router.get('/:query', function(req, res) {
       productores = productores || []
 
       Producto.find(
-        { $text : { $search : "text to look for" } },
+        { $text : { $search : req.params.query } },
         { score : { $meta: "textScore" } }
       )
       .sort({ score : { $meta : 'textScore' } })

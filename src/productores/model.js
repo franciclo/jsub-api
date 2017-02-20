@@ -4,9 +4,10 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const productorSchema = new Schema({
-  coordinates: [Number],
-  users: [String],
   name: String,
+  users: [String],
+  coordinates: [Number],
+  precios: [{ type : ObjectId, ref: 'Precio' }]
   stock: [{ type : ObjectId, ref: 'Stock' }]
 });
 

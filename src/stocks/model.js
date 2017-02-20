@@ -4,7 +4,7 @@ var mongoose = require('mongoose')
 var stockSchema = mongoose.Schema(
   {
     producto: { type : ObjectId, ref: 'Producto' }
-    altura: String,
+    madurez: Date,
     cantidad: Number
   }
 )
