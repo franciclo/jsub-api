@@ -13,9 +13,11 @@ db.on('error', (err) => console.log(err.message))
 
 app.use(cors())
 
-app.use('/viveros', require('./viveros'))
+app.use('/productores', require('./productores'))
 
-app.use('/especies', require('./especies'))
+app.use('/productos', require('./productos'))
+
+app.use('/busquedas', require('./busqueda'))
 
 app.use('/migra', require('./migra'))
 

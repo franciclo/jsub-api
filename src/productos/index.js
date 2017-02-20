@@ -1,6 +1,6 @@
 const express = require('express')
 // const jwt = require('express-jwt')
-const Especie = require('./model')
+const Producto = require('./model')
 
 const router = express.Router()
 // const authCheck = jwt({
@@ -10,9 +10,9 @@ const router = express.Router()
 
 router.get('/:ids', function(req, res) {
   const ids = req.params.ids.split(',')
-  Especie.find({especieId: {$in: ids}}, function (err, especies) {
+  Producto.find({id: {$in: ids}}, function (err, productos) {
     if(err) return res.sendStatus(500)
-    res.json(especies)
+    res.json(productos)
   })
 })
 //
