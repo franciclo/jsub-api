@@ -1,12 +1,12 @@
-var mongoose = require('mongoose')
+const mongoose = require('mongoose')
 
-var productoSchema = mongoose.Schema({
+const productoSchema = mongoose.Schema({
   name: String,
   latin: String,
   tipo: String,
-  madurez: Number
+  mesesMadurez: Number
 })
 
-productoSchema.index({ name: 'text', latin: 'text' });
+productoSchema.index({ name: 'text', latin: 'text' })
 
 module.exports = mongoose.model('Producto', productoSchema)

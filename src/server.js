@@ -17,9 +17,7 @@ app.use('/productores', require('./productores'))
 
 app.use('/productos', require('./productos'))
 
-app.use('/busquedas', require('./busqueda'))
-
-app.use('/migra', require('./migra'))
+app.use('/busquedas', require('./busquedas'))
 
 app.use(function (err, req, res, next) {
   console.log(err)

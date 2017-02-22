@@ -1,16 +1,19 @@
 const mongoose = require('mongoose')
-// require('../stock/model')
+require('../stocks/model')
+require('../productos/model')
+require('../precios/model')
 
 const Schema = mongoose.Schema
+const ObjectId = Schema.ObjectId
 
 const productorSchema = new Schema({
   name: String,
   users: [String],
   coordinates: [Number],
-  precios: [{ type : ObjectId, ref: 'Precio' }]
-  stock: [{ type : ObjectId, ref: 'Stock' }]
+  precios: [{ type : ObjectId, ref: 'Precio' }],
+  stock: [{ type : ObjectId, ref: 'Stock' }],
 }, { collection: 'productores' });
 
-productorSchema.index({ name: 'text' });
+productorSchema.index({ name: 'text' })
 
-module.exports = mongoose.model('Productor', productorSchema);
+module.exports = mongoose.model('Productor', productorSchema)

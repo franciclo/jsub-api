@@ -1,9 +1,11 @@
-var mongoose = require('mongoose')
-// require('../producto/model')
+const mongoose = require('mongoose')
 
-var stockSchema = mongoose.Schema(
+const Schema = mongoose.Schema
+const ObjectId = Schema.ObjectId
+
+const stockSchema = new Schema(
   {
-    producto: { type : ObjectId, ref: 'Producto' }
+    producto: { type : ObjectId, ref: 'Producto' },
     madurez: Date,
     cantidad: Number
   }

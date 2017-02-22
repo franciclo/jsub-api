@@ -1,4 +1,5 @@
 const express = require('express')
+const ObjectID = require('mongodb').ObjectID
 // const jwt = require('express-jwt')
 const Productor = require('./model')
 
@@ -12,10 +13,14 @@ const router = express.Router()
 router.get('/:ids', function(req, res) {
   const ids = req.params.ids.split(',')
 
+  const valid = ids.filter(id => ObjectID.isValid(id)).length > 0
+  if(!valid) return res.sendStatus(500)
+
+  console.log(ids)
   Productor.find({_id: {$in: ids}})
     .populate('stock precios')
     .then(function (productores) {
-      if(err) return res.sendStatus(500)
+      console.log(productores)
       const productoresStock = productores.map(productor => ({
           type: 'Feature',
           geometry: {
@@ -29,9 +34,13 @@ router.get('/:ids', function(req, res) {
         })
       )
 
-      res.json(productoresStock)
+      res.json(productoresStock
+        .reduce((map, p) => { map[p.properties.id] = p; return map }, {}))
   })
-  .catch(err => { console.log(err) })
+  .catch(err => {
+    console.log(err)
+    res.sendStatus(500)
+  })
 })
 //
 // router.post('/stock', authCheck, function(req, res) {

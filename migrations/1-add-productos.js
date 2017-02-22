@@ -10,6 +10,7 @@ module.exports.up = function (done) {
   var productsCreation = productosData.map(function(producto) {
     var oldId = producto.id
     producto.name = producto.label
+    producto.mesesMadurez = 6
 
     delete producto.id
     delete producto.label

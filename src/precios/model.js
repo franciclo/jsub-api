@@ -1,9 +1,11 @@
 var mongoose = require('mongoose')
-// require('../producto/model')
+
+const Schema = mongoose.Schema
+const ObjectId = Schema.ObjectId
 
 var precioSchema = mongoose.Schema(
   {
-    producto: { type : ObjectId, ref: 'Producto' }
+    producto: { type : ObjectId, ref: 'Producto' },
     precio: Number
   }
 )

@@ -1,6 +1,6 @@
 const express = require('express')
-const Productor = require('../productor/model')
-const Producto = require('../producto/model')
+const Productor = require('../productores/model')
+const Producto = require('../productos/model')
 
 const router = express.Router()
 
